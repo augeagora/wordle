@@ -1,4 +1,5 @@
-﻿using System.Reflection.Metadata.Ecma335;
+﻿using System.ComponentModel;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Wordle
 {
@@ -50,42 +51,89 @@ namespace Wordle
 			// There can be multiple instances of a single letter, which I'll have to work out at some point
 
 			// For now the Answer will always be "s t o a t" to work out the logic
-			char[] answer = {'s','t','o','a','t'};
-			
+			char[] answer = Answer();
+			char[] validGuess;
+
 			Console.WriteLine("Please type in a five letter word and press ENTER");
-			
-			String guess = Console.ReadLine()  ?? "";
-			char[] validGuess = GuessCheck(guess);
+            
 
-			Console.WriteLine("Making sure the array is correct:");
-			for (int i = 0; i < 5; i++)
+            int guessesMade = 0;
+			bool win = false;
+			while(win == false)
 			{
-				Console.WriteLine(validGuess[i]);
-			}
-
-
+				if (guessesMade == 6)
+				{
+					Console.BackgroundColor = ConsoleColor.Red;
+					Console.WriteLine("\nt r a g i c");
+					Console.ResetColor();
+					break;
+				}
+                answer = Answer(); // Reset each time
+                validGuess = GuessCheck();
+                Respond(validGuess, answer);
+				guessesMade++;
+            }
+        }
+		
+		static char[] Answer()
+		{
+            char[] answer = { 's', 't', 'o', 'a', 't' };
+            return answer;
 		}
 
-		static char[] GuessCheck(String guess)
+		static char[] GuessCheck()
 		{
-			char[] validGuess = {};
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            String guess = Console.ReadLine() ?? "";
+            Console.ResetColor();
 
-			if (guess.Length == 5)
+            char[] validGuess = {};
+
+			while (guess.Length !=5)
 			{
-				Console.WriteLine($"Yeah that works: {guess}");
-                validGuess = guess.ToCharArray();
-            }
-			else 
-			{
-				Console.WriteLine($"Your guess was {guess.Length} characters long.");
-				Console.WriteLine("Guesses must be five characters long");
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.WriteLine("Invalid Guess");
+				Console.ForegroundColor = ConsoleColor.Cyan;
+				guess = Console.ReadLine() ?? "";
+				Console.ResetColor();
 			}
+			validGuess = guess.ToCharArray();
 			return validGuess;
         }
 
 		static void Respond(char[] vg, char[] answer)
 		{
-
-		}
+			for (int i = 0; i < 5; i++)
+			{
+				if (vg[i] == answer[i])
+				{
+					Console.BackgroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(vg[i]);
+					Console.ResetColor();
+                    Console.Write(" ");
+                }
+				else if (answer.Contains(vg[i]))
+				{
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(vg[i]);
+                    Console.ResetColor();
+                    Console.Write(" ");
+                }
+				else
+				{
+                    Console.BackgroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(vg[i]);
+                    Console.ResetColor();
+                    Console.Write(" ");
+                }
+                // Changes the value in answer so that when checking if answer contains
+                // x char it doesn't say a char is within the array multiple times incorrectly.
+                answer[i] = '0';
+			}
+            Console.WriteLine();
+        }
 	}
 }
