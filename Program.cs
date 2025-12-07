@@ -12,8 +12,135 @@
 		static void Main(string[] arg)
 		{
 			Boot();
-			Start();
+			// Start();
+			PlayNormal();
 		}
+
+        static void Boot()
+        {
+            String aa = "AugeAgora";
+            Console.BackgroundColor = ConsoleColor.DarkMagenta;
+            Console.ForegroundColor = ConsoleColor.White;
+            for (int i = 0; i < 9; i++)
+            {
+                Console.Write(aa[i]);
+                Thread.Sleep(100);
+            }
+            Thread.Sleep(200);
+            Console.ResetColor();
+            Console.Clear();
+        }
+
+		static void PlayNormal()
+		{
+			char[] answer = { 's', 't', 'o', 'a', 't' };
+			String guess = "";
+
+			// Make sure the guess is five letters long
+			while (guess.Length != 5)
+			{
+                // Ask the user for a five letter word:
+                Console.Write("Type in your Guess: ");
+                guess = Console.ReadLine();
+                guess = guess.ToLower();
+
+				if (guess.Length != 5 )
+				{
+                    Console.ForegroundColor = ConsoleColor.Red; 
+					Console.WriteLine("Guess must be five letters");
+					Console.ResetColor();
+				}
+			}
+
+			char[] guessArray = guess.ToCharArray();
+
+            int repeats = 0;
+
+            for (int i = 0; i < 5; i++)
+			{
+				char curChar = guess[i];
+				int count = 0;
+
+				// Count how many times curChar appears inside the answer
+				for (int j = 0; j < 5; j++)
+				{
+					if (curChar == answer[j]) { count++; }
+				}
+
+
+                // If curChar doesn't appear at all
+                if (count == 0)
+                {
+                    Console.BackgroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(curChar);
+                    Console.ResetColor();
+                }
+
+                // If curChar appears only 1 time
+                else if ((count == 1) && (guessArray[i] != answer[i]))
+				{
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+					Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(curChar);
+					Console.ResetColor();
+				}
+				else if  ((count == 1) && (guessArray[i] == answer[i]))
+				{
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(curChar);
+                    Console.ResetColor();
+                }
+				
+                // If curChar appears 2 times
+                else if ((count == 2) && (guessArray[i] != answer[i]))
+                {
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(curChar);
+                    Console.ResetColor();
+                }
+                else if ((count == 2) && (guessArray[i] == answer[i]))
+                {
+                    Console.BackgroundColor = ConsoleColor.Green;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write(curChar);
+                    Console.ResetColor();
+                }
+            }
+			
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         static void Start()
         {
@@ -43,21 +170,6 @@
                 Start();
             }
         }
-
-		static void Boot()
-		{
-			String aa = "AugeAgora";
-			Console.BackgroundColor = ConsoleColor.DarkMagenta;
-			Console.ForegroundColor = ConsoleColor.White;
-			for (int i = 0; i < 9; i++)
-			{
-				Console.Write(aa[i]);
-				Thread.Sleep(100);
-			}
-            Thread.Sleep(200);
-            Console.ResetColor();
-			Console.Clear();
-		}
 
         static void Exit()
 		{
