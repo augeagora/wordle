@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System.Data;
+using System.IO;
 using System.Media;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 
@@ -14,11 +16,13 @@ void Menu()
     Console.WriteLine();
     Console.WriteLine("0 -- Play");
     Console.WriteLine("1 -- DevMode");
+    Console.WriteLine("  -- Stats");
+    Console.WriteLine("  -- About");
     Console.WriteLine("2 -- Exit");
     Console.WriteLine();
     UserColor();
-    String selection = Console.ReadLine();
-
+    
+        String selection = Console.ReadLine();
 
     while (selection != "0" && selection != "1" && selection != "2")
     {
@@ -30,8 +34,7 @@ void Menu()
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.Write("   ");
-        TitleColor("Start", "WRITELINE");
+        TitleColor("   Start   ", "WRITELINE");
         Reset();
         Console.WriteLine("-----------");
         Play(devMode);
