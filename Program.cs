@@ -34,7 +34,7 @@ void Menu()
     {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.Cyan;
-        TitleColor("   Start   ", "WRITELINE");
+        TitleColor("   Basic   ", "WRITELINE");
         Reset();
         Console.WriteLine("-----------");
         Play(devMode);
@@ -43,8 +43,7 @@ void Menu()
     if (selection == "1")
     {
         Console.Clear();
-        Console.Write("   ");
-        TitleColor("{DEV}", "WRITELINE");
+        TitleColor(" {DEVMODE} ", "WRITELINE");
         Reset();
         Console.WriteLine("-----------");
         devMode = true;
@@ -60,9 +59,10 @@ void Menu()
 
 void Play(bool devMode)
 {
-    // First we need to get the wordList and word
+    // First we need to get the wordList, answerWords and pick the word
     List<string> wordList = GetWordList();
-    String word = GetWord(wordList);
+    List<string> answerWords = GetAnswerWords();
+    String word = GetWord(answerWords);
 
     // Grab the virtual keyboard
     var vk = VirtualKeyboardLetters();
@@ -197,7 +197,9 @@ void Play(bool devMode)
             }
             else if (guessArray[i] == "Gray")
             {
-                Gray($"{guess[i]}");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(guess[i]);
+                Console.ResetColor();
             }
             else if (guessArray[i] == "Yellow")
             {
@@ -205,7 +207,9 @@ void Play(bool devMode)
             }
             else if (guessArray[i] == "Repeat")
             {
-                Gray($"{guess[i]}");
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write(guess[i]);
+                Console.ResetColor();
             }
         }
         Console.WriteLine();
@@ -333,11 +337,21 @@ void Boot()
 List<string> GetWordList()
 {
     // Read File
-    string filePath = @"valid-wordle-words.txt";
+    string filePath = @"words//valid-wordle-words.txt";
     List<string> wordList = new List<string>();
     wordList = File.ReadAllLines(filePath).ToList();
 
     return wordList;
+}
+
+List<string> GetAnswerWords()
+{
+    // Read File
+    string filePath = @"words//answers.txt";
+    List<string> answerWords = new List<string>();
+    answerWords = File.ReadAllLines(filePath).ToList();
+
+    return answerWords;
 }
 
 String GetWord(List<string> wordList)
@@ -354,7 +368,7 @@ String GetWord(List<string> wordList)
 void Green(String s)
 {
     Console.BackgroundColor = ConsoleColor.Green;
-    Console.ForegroundColor = ConsoleColor.Black;
+    Console.ForegroundColor = ConsoleColor.DarkGreen;
     Console.Write(s);
     Console.ResetColor();
 }
@@ -362,15 +376,15 @@ void Green(String s)
 void Yellow(String s)
 {
     Console.BackgroundColor = ConsoleColor.Yellow;
-    Console.ForegroundColor = ConsoleColor.Black;
+    Console.ForegroundColor = ConsoleColor.DarkYellow;
     Console.Write(s);
     Console.ResetColor();
 }
 
 void Gray(String s)
 {
-    Console.BackgroundColor = ConsoleColor.Gray;
-    Console.ForegroundColor = ConsoleColor.Gray;
+    // This should really be BLACK
+    Console.ForegroundColor = ConsoleColor.Black;
     Console.Write(s);
     Console.ResetColor();
 }
@@ -384,7 +398,7 @@ void DevComment(String s, String writeType)
 {
     if (writeType == "WRITELINE")
     {
-        Console.ForegroundColor = ConsoleColor.DarkGreen;
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
         Console.WriteLine(s);
         Console.ResetColor();
     }
@@ -505,7 +519,10 @@ void PrintVirtualKeyBoard(Dictionary<char, string> virtualKeyboardLetters, strin
         }
         else
         {
+            Console.BackgroundColor = ConsoleColor.Gray;
+            Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(letter.Key);
+            Console.ResetColor();
         }
     }
     Console.WriteLine("\n-----------");
