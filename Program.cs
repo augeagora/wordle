@@ -17,14 +17,14 @@ void Menu()
     Console.WriteLine("0 -- Play");
     Console.WriteLine("1 -- DevMode");
     Console.WriteLine("  -- Stats");
-    Console.WriteLine("  -- About");
-    Console.WriteLine("2 -- Exit");
+    Console.WriteLine("2 -- About");
+    Console.WriteLine("3 -- Exit");
     Console.WriteLine();
     UserColor();
     
         String selection = Console.ReadLine();
 
-    while (selection != "0" && selection != "1" && selection != "2")
+    while (selection != "0" && selection != "1" && selection != "2" && selection != "3")
     {
         selection = Console.ReadLine();
     }
@@ -51,6 +51,12 @@ void Menu()
     }
 
     if (selection == "2")
+    {
+        Console.Clear();
+        About();
+    }
+
+    if (selection == "3")
     {
         Console.Clear();
         Exit();
@@ -526,4 +532,35 @@ void PrintVirtualKeyBoard(Dictionary<char, string> virtualKeyboardLetters, strin
         }
     }
     Console.WriteLine("\n-----------");
+}
+
+void About() 
+{
+    Console.ForegroundColor= ConsoleColor.White;
+    Console.WriteLine(" ─────────────────────────────────────────────── ");
+    Console.WriteLine("| Developed by Douglas Serrano                  |");
+    Console.WriteLine("| Github: AugeAgora                             |");
+    Console.WriteLine("|                                               |");
+    Console.WriteLine("| I wanted to see if I could replicate the game |");
+    Console.WriteLine("| Wordle using C# and add my own little ideas   |");
+    Console.WriteLine("| to the base game.                             |");
+    Console.WriteLine("|                                               |");
+    Console.WriteLine("| All sounds effects were hastily made by me in |");
+    Console.WriteLine("| Ableton! I did want to make little menu music |");
+    Console.WriteLine("| but I worried it would become annoying to     |");
+    Console.WriteLine("| listen to. The package I'm using for audio    |");
+    Console.WriteLine("| also doesn't give me much leeway so I think   |");
+    Console.WriteLine("| further work will be done once I move to a    |");
+    Console.WriteLine("| different framework.                          |");
+    Console.WriteLine("|                                               |");
+    Console.WriteLine("| This is Version [0.4]. I plan on releasing up |");
+    Console.WriteLine("| to version [1.0] and then moving on to        |");
+    Console.WriteLine("| rebuild the project in some game engine.      |");
+    Console.WriteLine("|                                               |");
+    Console.WriteLine("| Thanks for playing!                           |");
+    Console.WriteLine(" ─────────────────────────────────────────────── ");
+    Console.ReadLine();
+    Console.Clear();
+    Console.ResetColor();
+    Menu();
 }
